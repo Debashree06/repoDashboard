@@ -1,10 +1,14 @@
 import React, { useState, useRef } from "react";
-import { level1Questions, level2Questions } from "./QuizQuestionArray"; 
+import { level1Questions, level2Questions } from "./QuizQuestionArray";
 import { MenuItem, Select } from "@mui/material";
 
 const QuizComponent = () => {
-  const [level1Answers, setLevel1Answers] = useState(new Array(level1Questions.length).fill(null));
-  const [level2Answers, setLevel2Answers] = useState(new Array(level2Questions.length).fill(null));
+  const [level1Answers, setLevel1Answers] = useState(
+    new Array(level1Questions.length).fill(null)
+  );
+  const [level2Answers, setLevel2Answers] = useState(
+    new Array(level2Questions.length).fill(null)
+  );
   const [level1Completed, setLevel1Completed] = useState(false);
   const [level2Enabled, setLevel2Enabled] = useState(false);
   const [isLevel1Open, setIsLevel1Open] = useState(false);
@@ -47,7 +51,8 @@ const QuizComponent = () => {
   };
 
   const renderQuestions = (questions, level) => {
-    const handleAnswerChange = level === 1 ? handleLevel1AnswerChange : handleLevel2AnswerChange;
+    const handleAnswerChange =
+      level === 1 ? handleLevel1AnswerChange : handleLevel2AnswerChange;
     const answers = level === 1 ? level1Answers : level2Answers;
 
     return questions.map((q, index) => (
@@ -71,54 +76,52 @@ const QuizComponent = () => {
 
   return (
     <div className="space-y-6">
-     <div className="flex flex-col lg:flex-row justify-between items-center pb-8">
+      <div className="flex flex-col lg:flex-row justify-between items-center pb-8">
         <div className="mb-4 lg:mb-0">
           <h1 className="font-semibold text-2xl">Take Quiz</h1>
           <h2 className="text-md">
             Dashboard / <span className="text-gray-600">Take Quiz</span>
           </h2>
         </div>
-        
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 mb-6">
+      <div className="mb-4 flex md:items-end md:justify-end items-center justify-center">
+        {/* Search Course Input Field */}
+       <div className="flex items-end justify-end lg:w-2/3 w-full md:flex-row flex-col gap-4">
+        {/* Search Course Input Field */}
+        <input
+          type="text"
+          placeholder="Search Quiz"
+          className="w-full py-2 px-3 border rounded-md text-md"
+        />
+        {/* Department Select Dropdown */}
+        <Select
+          className="w-full"
+          size="small"
+          displayEmpty
+          defaultValue=""
+          variant="outlined"
+        >
+          <MenuItem value="">Department</MenuItem>
+          <MenuItem value="It">It</MenuItem>
+          <MenuItem value="Marketing">Marketing</MenuItem>
+          <MenuItem value="Sales">Sales</MenuItem>
+          <MenuItem value="Others">Others</MenuItem>
+        </Select>
 
-  {/* Department Select Dropdown */}
-  <Select
-    className="w-full"
-    size="small"
-    displayEmpty
-    defaultValue=""
-    variant="outlined"
-  >
-    <MenuItem value="">Department</MenuItem>
-    <MenuItem value="It">It</MenuItem>
-    <MenuItem value="Marketing">Marketing</MenuItem>
-    <MenuItem value="Sales">Sales</MenuItem>
-    <MenuItem value="Others">Others</MenuItem>
-  </Select>
 
-  {/* Search Course Input Field */}
-  <input
-    type="text"
-    placeholder="Search Course"
-    className="w-full py-2 px-3 border rounded-md text-md"
-  />
-
-  {/* Search Button */}
-  <button className="bg-golden w-full py-2 rounded-md text-white font-semibold text-md">
-    Search
-  </button>
-
-</div>
-
+        <button className="font-medium py-2 px-4 sm:px-6 bg-[#b17f27] text-white rounded-md flex justify-center items-center gap-2 h-[40px] text-sm sm:text-base hover:bg-[#a56f23] transition-all duration-200 w-full sm:flex-wrap">
+          Search
+        </button>
+      </div>
+      </div>
 
       {/* Level 1 Accordion */}
       <div
         ref={level1Ref}
         id="accordion-collapse"
         data-accordion="collapse"
-        className={`border border-e-secondary p-4 flex justify-between rounded-md`}
+        className={`border border-e-secondary p-4 flex justify-between rounded-md cursor-pointer`}
         onClick={(e) => {
           if (level1Ref.current && level1Ref.current.contains(e.target)) {
             setIsLevel1Open(false);
@@ -142,10 +145,10 @@ const QuizComponent = () => {
         <div className="p-4">
           {renderQuestions(level1Questions, 1)}
           <button
-            className="bg-blue-500 text-white py-2 px-4 rounded-md"
+            className="bg-golden text-white py-2 px-4 rounded-md"
             onClick={handleSubmitLevel1}
           >
-            Submit Level 1
+            Submit
           </button>
         </div>
       )}
@@ -159,7 +162,11 @@ const QuizComponent = () => {
           level2Enabled ? "" : "opacity-50 cursor-not-allowed"
         }`}
         onClick={(e) => {
-          if (level2Enabled && level2Ref.current && level2Ref.current.contains(e.target)) {
+          if (
+            level2Enabled &&
+            level2Ref.current &&
+            level2Ref.current.contains(e.target)
+          ) {
             setIsLevel2Open(false);
           }
         }}
@@ -186,10 +193,10 @@ const QuizComponent = () => {
         <div className="p-4">
           {renderQuestions(level2Questions, 2)}
           <button
-            className="bg-blue-500 text-white py-2 px-4 rounded-md"
+            className=" text-white py-2 px-4 rounded-md"
             onClick={handleSubmitLevel2}
           >
-            Submit Level 2
+            Submit
           </button>
         </div>
       )}
